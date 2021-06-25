@@ -1,11 +1,5 @@
 import {
-    ForceReply,
-    InlineKeyboardMarkup,
-    MessageEntity,
     MessageUpdate,
-    ReplyKeyboardMarkup,
-    ReplyKeyboardRemove,
-    SendMessage,
     TelegramBot,
     UpdateType,
   } from "https://deno.land/x/telegram_bot_api@0.4.0/mod.ts";
@@ -49,6 +43,10 @@ import {
           } else {
             command = text.substring(1);
             payload = "";
+          }
+          const tagSymbolIndex = command.indexOf('@');
+          if (tagSymbolIndex > -1) {
+            command = command.substring(0, tagSymbolIndex);
           }
           if (this.commandList.has(command)) {
             this.commandList.get(command)!(new Context(msg, payload, bot));
